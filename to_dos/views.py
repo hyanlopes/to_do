@@ -45,4 +45,12 @@ class ToDoCompleteView(APIView):
         return Response(serializer.data)
 
 
+class TodoDetailView(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsOwnerTodoPermission]
+    serializer_class = ToDoSerializer
+    queryset = ToDo.objects.all()
+    lookup_url_kwarg = "to_do_id"
+
+
 # Create your views here.
