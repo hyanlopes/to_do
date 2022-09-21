@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "users",
     "to_dos",
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -85,19 +86,19 @@ WSGI_APPLICATION = "project.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        # O django já contém a instrução para rodar o motor psycopg2 do postgres
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("POSTGRES_DB"),
-        "USER": os.getenv("POSTGRES_USER"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
-        "HOST": "127.0.0.1",
-        "PORT": 5432,
-    },
     # "default": {
-    #     "ENGINE": "django.db.backends.sqlite3",
-    #     "NAME": BASE_DIR / "db.sqlite3",
-    # }
+    #     # O django já contém a instrução para rodar o motor psycopg2 do postgres
+    #     "ENGINE": "django.db.backends.postgresql",
+    #     "NAME": os.getenv("POSTGRES_DB"),
+    #     "USER": os.getenv("POSTGRES_USER"),
+    #     "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+    #     "HOST": "127.0.0.1",
+    #     "PORT": 5432,
+    # },
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
 
 
@@ -159,3 +160,16 @@ if DATABASE_URL:
     # já que esse bloco apenas roda quando estamos
     # dentro do ambiente do Heroku
     DEBUG = False
+
+REST_FRAMEWORK = {
+    # YOUR SETTINGS
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "TO-DO API",
+    "DESCRIPTION": "An api that you can plan your day to day, writing your notes and obligations!",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    # OTHER SETTINGS
+}
